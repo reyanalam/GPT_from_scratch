@@ -7,9 +7,11 @@ Byte-Pair Encoding is a technique of word compression. The main idea behind the 
 
 ### Why not doing word based tokenization or character based tokenization?
 
-**1) Word based tokenization can have an issue of out of vocabulory words(OOV). If a word that is outside the vocabulory is provided, the result will be an error. 
+1) Word based tokenization can have an issue of out of vocabulory words(OOV). If a word that is outside the vocabulory is provided, the result will be an error.
+
 To deal with it we can use '<|unk|>' as out of vocabulory words and assign them last token value. Another issue which may arise is the memory of the vocabulory. There are over 2 millions words. This will be memory inefficient.
-**2) Character based tokenization can deal with the issue that is faced by word based tokenization. However the main problem with character based tokens is that the meaning of word is entirely lost.
+
+3) Character based tokenization can deal with the issue that is faced by word based tokenization. However the main problem with character based tokens is that the meaning of word is entirely lost.
 
 For these reasons sub-word based tokenization is prefered.
 
@@ -30,5 +32,20 @@ We use Dataloader and Dataset from data.utils class of Pytorch for data sampling
 
 ## Step 3: Token Embeddings
 
+Eaxh token ID is converted a vector embedding. Vectors can capture semantic meaning, therefore it becomes an important step.
+
+### How are token embeddigns created for LLMs?
+
+The embedding weights are assigned random values which are later optimized as part of the LLM training process.
+
+I have used Embedding layer from torch.nn.Embeddings to create a lookup table. It is called a lookup table because with respect to corrosponding token ID a vector of that index is found in the matrix.
+
+The dimension of this lookup table is vocabulory_size * vector_dim. 
+
+### Position Embeddings
+
+
+
+## Step 4: Attention Mechanism
 
 
