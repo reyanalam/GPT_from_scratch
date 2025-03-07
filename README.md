@@ -114,6 +114,22 @@ The output is normalized such that the mean of each vector becomes zero and the 
 
 ## Step 8: Output head
 
-It is a neural network that converts our tokens vector into a vector of size equal to vocabulory size. Thus each token is represented in terms of all the tokens in the vocabulory.
+It is a neural network that converts our tokens vector into a vector (logits) of size equal to vocabulory size. Thus each token is represented in terms of all the tokens in the vocabulory.
+
+## Next word predictor
+
+The main aim of our GPT is to predict the next word. Since GPT is autoregressive model, the output of previous token is appended to the input sequence for the next iteration.
+
+The last vector from the logit is extracted which is normalized using softmax. This gives a probability of vector. The index whoes probability is maximum will be the next work. This token is then appended to our input (the id of last vector). This process is done for maximum_new_tokens time. The maximum_new_tokens in our case is 10.
+
+## Loss Function
+
+The model is evaluated by calculating a negative log likelihood (cross entropy) of probabilities. The probabilities of the token IDs present in our target tensors, the tensor which we created as input output pair in the beginning. The target tensor contains the actual output of each input token. It consists of token IDs shifted by one as of the input tensor. With respect to each token the tokenID in the target tensor is looked in our logits corrosponding to the same token. Its probability is then taken.
+
+The negative log likelihood of this probability is our loss function.
+
+## Training Loop
+
+For each epoch and for each batch in the tarining set for that epoch, the gradient from previous epoch is reset. Then the loss is calculated for the current batch. After this loss gradient with respect to all the parameters is calculated by a backward pass. Then the model weight is updated using the loss gradient.
 
 
